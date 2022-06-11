@@ -15,7 +15,7 @@ const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
 
 const ID_TYPES = ['DEGEN', 'STANDARD', 'DPRK', 'TUPAC', 'WORKPLACE'];
 
-const sbt_contract_address = '0x766f3a30d11337382beded1ba5cc88dd7c0c02f0';
+const sbt_contract_address = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 
 export default function Web() {
 	const inputRef = React.useRef<HTMLInputElement>();
@@ -24,8 +24,6 @@ export default function Web() {
 	const [currentStore, setCurrentStore] = React.useState('');
 	const [{ data: account }] = useAccount();
 	const [activeIdType, setActiveIdType] = React.useState(ID_TYPES[0]);
-
-	console.log(age);
 
 	const sbt = useContractWrite<SBT>(
 		{
@@ -50,7 +48,7 @@ export default function Web() {
 			const provider = new ethers.providers.Web3Provider(window.ethereum as any);
 			const signer = provider.getSigner();
 			const sbtContract = SBT__factory.connect(sbt_contract_address, signer);
-
+			console.log(sbtContract);
 			try {
 				const tx = await sbtContract.mint(account.address, {
 					soul: account.address,
@@ -58,6 +56,7 @@ export default function Web() {
 					mood: mood,
 					gender: gender,
 					identity: account.address,
+					image: null,
 				});
 				if (tx.data) {
 					console.log(tx);
