@@ -1,20 +1,18 @@
-import Image from 'next/image';
-import { useCallback, useEffect, useState } from 'react';
-import { useRef } from 'react';
-import Webcam from 'react-webcam';
 import * as faceapi from 'face-api.js';
-import { checkFace } from './checkFaces';
-import { useContractWrite, useAccount } from 'wagmi';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import Webcam from 'react-webcam';
+import { useAccount } from 'wagmi';
+import { useGlobalStateContext } from './GlobalStateProvider';
 
 const sbt_contract_address = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 
 export function IdCard() {
 	//fetch ethereum address
 	const webcamRef = useRef<Webcam>(null);
+	const { age } = useGlobalStateContext();
 
 	const [{ data: account }] = useAccount();
 
-	const [age, setAge] = useState(null);
 	const [gender, setGender] = useState(null);
 	const [mood, setMood] = useState(null);
 	const [isLoaded, setIsLoaded] = useState<boolean>(false);
@@ -99,7 +97,7 @@ export function IdCard() {
 			<div className=" bg-[#f8f5de] shadow-customInset p-6 rounded-md flex flex-row w-[700px] h-96">
 				<div className="flex border border-amber-200">
 					<div className="flex ml-1 -rotate-2 w-1/3 flex-col justify-between  items-start mr-[2px]">
-						<Webcam ref={webcamRef} className="z-10 rounded-sm" videoConstraints={{ width: 700, height: 800 }} />
+						{/* <Webcam ref={webcamRef} className="z-10 rounded-sm" videoConstraints={{ width: 700, height: 800 }} /> */}
 						<img
 							className="absolute bottom-2 right-10 -rotate-[25deg] rounded-full "
 							alt="id-card"

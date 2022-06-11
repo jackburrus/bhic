@@ -8,6 +8,7 @@ import Webcam from 'react-webcam';
 import { IdCard } from '@/components/IdCard';
 import UploadImage from '@/components/UploadImage';
 import { File, NFTStorage } from 'nft.storage';
+import { useGlobalStateContext } from '@/components/GlobalStateProvider';
 
 const hasEthereum = typeof window !== 'undefined' && typeof window.ethereum !== 'undefined';
 const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
@@ -16,19 +17,15 @@ const ID_TYPES = ['DEGEN', 'STANDARD', 'DPRK', 'TUPAC', 'WORKPLACE'];
 
 const sbt_contract_address = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 
-//create context for the global state
-const GlobalStateContext = React.createContext({
-	age: '',
-	mood: '',
-	gender: '',
-});
-
 export default function Web() {
 	const inputRef = React.useRef<HTMLInputElement>();
+	const { age } = useGlobalStateContext();
 	const [status, setStatus] = React.useState<'loading...' | 'complete'>('complete');
 	const [currentStore, setCurrentStore] = React.useState('');
 	const [{ data: account }] = useAccount();
 	const [activeIdType, setActiveIdType] = React.useState(ID_TYPES[0]);
+
+	console.log(age);
 
 	const sbt = useContractWrite<SBT>(
 		{
