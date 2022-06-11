@@ -1,6 +1,6 @@
 import { Button, WalletConnectModal } from 'ui';
 import Head from 'next/head';
-import { useContractWrite, useAccount } from 'wagmi';
+import { useContractWrite, useAccount, useBlockNumber } from 'wagmi';
 import { Storage__factory, Storage, SBT, SBT__factory } from '@/typechain';
 import { ethers } from 'ethers';
 import * as React from 'react';
@@ -70,37 +70,30 @@ export default function Web() {
 		}
 		fetchStore();
 	}, []);
-	React.useEffect(() => {
-		async function fetchSBT() {
-			if (hasEthereum) {
-				const provider = new ethers.providers.Web3Provider(window.ethereum as any);
-				const sbtContract = SBT__factory.connect(sbt_contract_address, provider);
-				try {
-					const data = await sbtContract.getSoul();
-					setCurrentStore(data);
-				} catch (err) {
-					console.log('EfetchStorerror: ', err);
-				}
-			}
-		}
-		fetchSBT();
-	}, []);
 
-	const Mint = async () => {
+	const mint = async () => {
 		if (hasEthereum) {
 			const provider = new ethers.providers.Web3Provider(window.ethereum as any);
-			const sbtContract = SBT__factory.connect(sbt_contract_address, provider);
-			try{
-				const tx = await sbtContract.mint(account.address);
-				// if (tx.data) {
-				// 	const receipt = await tx.data.wait();
-				// 	if (receipt.status === 1) {
-				// 		setCurrentStore(receipt.gasUsed);
-				// 	}
-				// }
+			const signer = provider.getSigner();
+			const sbtContract = SBT__factory.connect(sbt_contract_address, signer);
+			try {
+				const tx = await sbtContract.mint(account.address, {
+					identity: 'jack',
+					score: 10,
+					timestamp: 1,
+					url: 'https://google.com',
+				});
+				if (tx.data) {
+					console.log(tx);
+					// const receipt = await tx.data.wait();
+					// if (receipt.status === 1) {
+					// 	setCurrentStore(receipt.gasUsed);
+					// }
+				}
+			} catch (err) {
+				console.log(err);
 			}
 		}
-
 	};
 
 	return (
@@ -111,7 +104,11 @@ export default function Web() {
 
 			<main className="space-y-8 flex items-center flex-col">
 				<>
+					<div className="flex flex-col space-y-4">
+						<WalletConnectModal />
+					</div>
 					<h1 className="text-4xl font-semibold mb-8">Mint your own ID</h1>
+					<div onClick={mint}>Mint</div>
 					{/* <div>Active ID type: {activeIdType}</div> */}
 					{/* <div className="flex items-center justify-center  flex-row ">
 						{ID_TYPES.map((idType) => (
