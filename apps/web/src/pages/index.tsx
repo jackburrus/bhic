@@ -25,8 +25,6 @@ export default function Web() {
 	const [{ data: account }] = useAccount();
 	const [activeIdType, setActiveIdType] = React.useState(ID_TYPES[0]);
 
-	console.log(age);
-
 	const sbt = useContractWrite<SBT>(
 		{
 			addressOrName: contractAddress,
@@ -78,7 +76,7 @@ export default function Web() {
 			const signer = provider.getSigner();
 			const sbtContract = SBT__factory.connect(sbt_contract_address, signer);
 			try {
-				const soul = await sbtContract.hasSoul(account.address);
+				const soul = await sbtContract.getSoul(account.address);
 				console.log(soul);
 			} catch (err) {
 				console.log(err);
