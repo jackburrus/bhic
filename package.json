@@ -27,30 +27,6 @@
     "ts-node": "^10.4.0",
     "turbo": "latest"
   },
-  "turbo": {
-    "pipeline": {
-      "build": {
-        "dependsOn": [
-          "^build"
-        ],
-        "outputs": [
-          ".next/**",
-          "artifacts/**",
-          "cache/**",
-          "typechain/**"
-        ]
-      },
-      "lint": {
-        "outputs": []
-      },
-      "lint:fix": {
-        "outputs": []
-      },
-      "dev": {
-        "cache": false
-      }
-    }
-  },
   "engines": {
     "npm": ">=7.0.0",
     "node": ">=14.0.0"
