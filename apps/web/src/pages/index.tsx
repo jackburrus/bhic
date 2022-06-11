@@ -90,7 +90,7 @@ export default function Web() {
 		if (hasEthereum) {
 			const provider = new ethers.providers.Web3Provider(window.ethereum as any);
 			const sbtContract = SBT__factory.connect(sbt_contract_address, provider);
-			try{
+			try {
 				const tx = await sbtContract.mint(account.address);
 				// if (tx.data) {
 				// 	const receipt = await tx.data.wait();
@@ -98,8 +98,10 @@ export default function Web() {
 				// 		setCurrentStore(receipt.gasUsed);
 				// 	}
 				// }
+			} catch (error) {
+				
 			}
-		}
+			
 
 	};
 
