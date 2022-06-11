@@ -135,7 +135,7 @@ export function IdCard() {
 						<div className="border-b flex-1 border-amber-300 flex w-full items-start flex-col">
 							<div>Address</div>
 
-							<div className="text-sm">{truncateEthAddress(account.address)}</div>
+							<div className="text-sm">{account?.address && truncateEthAddress(account?.address)}</div>
 						</div>
 						<div className="border-b flex-1 border-amber-300 flex w-full items-start flex-col">
 							<div>Age</div>

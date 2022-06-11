@@ -9,6 +9,9 @@ import { IdCard } from '@/components/IdCard';
 import UploadImage from '@/components/UploadImage';
 import { File, NFTStorage } from 'nft.storage';
 import { useGlobalStateContext } from '@/components/GlobalStateProvider';
+import { ToastContainer, toast } from 'react-toastify';
+import Link from 'next/link';
+import 'react-toastify/dist/ReactToastify.css';
 
 const hasEthereum = typeof window !== 'undefined' && typeof window.ethereum !== 'undefined';
 const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
@@ -35,6 +38,14 @@ export default function Web() {
 		'set',
 	);
 
+	const RinkebyToast = (tx) => (
+		<div>
+			<a target={'_blank'} href={`https://rinkeby.etherscan.io/tx/${tx}`} rel="noreferrer">
+				Link to tx ⛓️
+			</a>
+		</div>
+	);
+
 	const mint = async () => {
 		if (hasEthereum) {
 			const provider = new ethers.providers.Web3Provider(window.ethereum as any);
@@ -51,6 +62,9 @@ export default function Web() {
 				});
 				if (tx.data) {
 					console.log(tx);
+					//view etherscan link on rinkeby
+
+					toast.success(RinkebyToast(tx.hash));
 				}
 			} catch (err) {
 				console.log(err);
@@ -100,6 +114,7 @@ export default function Web() {
 					<div>{localSoul && 'You already have an ID'}</div>
 
 					<IdCard />
+					<ToastContainer />
 				</>
 			</main>
 		</div>
