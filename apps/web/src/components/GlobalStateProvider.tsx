@@ -8,7 +8,7 @@ type GlobalStateProviderProps = {
 	mood: string;
 	gender: string;
 	image: string;
-	setImage: () => void;
+	setImage: (image) => void;
 };
 const GlobalStateContext = createContext<GlobalStateProviderProps>(undefined);
 

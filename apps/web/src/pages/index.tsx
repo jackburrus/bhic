@@ -15,7 +15,7 @@ const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
 
 const ID_TYPES = ['DEGEN', 'STANDARD', 'DPRK', 'TUPAC', 'WORKPLACE'];
 
-const sbt_contract_address = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
+const sbt_contract_address = '0x766f3a30d11337382beded1ba5cc88dd7c0c02f0';
 
 export default function Web() {
 	const inputRef = React.useRef<HTMLInputElement>();
@@ -50,6 +50,7 @@ export default function Web() {
 			const provider = new ethers.providers.Web3Provider(window.ethereum as any);
 			const signer = provider.getSigner();
 			const sbtContract = SBT__factory.connect(sbt_contract_address, signer);
+
 			try {
 				const tx = await sbtContract.mint(account.address, {
 					soul: account.address,

@@ -17,6 +17,7 @@ contract SBT {
         string age;
         string mood;
         string gender;
+        string image;
     }
 
     mapping (address => Soul) private souls;
