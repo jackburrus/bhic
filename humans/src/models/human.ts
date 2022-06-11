@@ -9,6 +9,22 @@ interface HumanAttrs {
   value?: string;
 }
 
+/*
+
+angry: 0.42737677693367004
+disgusted: 0.0006860005087219179
+fearful: 0.00022193275799509138
+happy: 0.005289583932608366
+neutral: 0.2347700148820877
+sad: 0.3312387466430664
+surprised: 0.0004170015745330602
+
+age: 36.14389419555664
+gender: "male"
+genderProbability: 0.9285446405410767
+
+*/
+
 interface HumanDoc extends mongoose.Document {
   title: string;
   emotion: string;

@@ -9,13 +9,27 @@ pragma solidity 0.8.9;
  */
 
 contract SBT {
-
     struct Soul {
         string identity;
-        // add issuer specific fields below
         string url;
         uint256 score;
         uint256 timestamp;
+
+        string title; // bored human #0000
+        string primaryEmotion;
+        uint256 age;
+        uint256 ageConfidence;
+        string gender;
+        uint256 genderConfidence;
+        string mintedToAddress;
+        uint256 value; 
+        uint256 angry; 
+        uint256 disgusted; // should we rename these emotions to crypto specific?
+        uint256 fearful; 
+        uint256 happy; 
+        uint256 neutral; 
+        uint256 sad; 
+        uint256 surprised; 
     }
 
     mapping (address => Soul) private souls;

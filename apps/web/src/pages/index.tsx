@@ -8,39 +8,42 @@ import Webcam from 'react-webcam';
 import { IdCard } from '@/components/IdCard';
 import UploadImage from '@/components/UploadImage';
 
-const hasEthereum = typeof window !== 'undefined' && typeof window.ethereum !== 'undefined';
-const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
+const hasEthereum =
+  typeof window !== "undefined" && typeof window.ethereum !== "undefined";
+const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
-const ID_TYPES = ['DEGEN', 'STANDARD', 'DPRK', 'TUPAC', 'WORKPLACE'];
+const ID_TYPES = ["DEGEN", "STANDARD", "DPRK", "TUPAC", "WORKPLACE"];
 
-const sbt_contract_address = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
+const sbt_contract_address = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
 
 export default function Web() {
-	const inputRef = React.useRef<HTMLInputElement>();
-	const [status, setStatus] = React.useState<'loading...' | 'complete'>('complete');
-	const [currentStore, setCurrentStore] = React.useState('');
-	const [{ data: account }] = useAccount();
-	const [activeIdType, setActiveIdType] = React.useState(ID_TYPES[0]);
-	const [{}, set] = useContractWrite<Storage>(
-		{
-			addressOrName: contractAddress,
-			contractInterface: Storage__factory.abi,
-		},
-		'set',
-	);
+  const inputRef = React.useRef<HTMLInputElement>();
+  const [status, setStatus] = React.useState<"loading..." | "complete">(
+    "complete"
+  );
+  const [currentStore, setCurrentStore] = React.useState("");
+  //   const [{ data: account }] = useAccount();
+  const [activeIdType, setActiveIdType] = React.useState(ID_TYPES[0]);
+  //   const [{}, set] = useContractWrite<Storage>(
+  //     {
+  //       addressOrName: contractAddress,
+  //       contractInterface: Storage__factory.abi,
+  //     },
+  //     "set"
+  //   );
 
-	const sbt = useContractWrite<SBT>(
-		{
-			addressOrName: contractAddress,
-			contractInterface: SBT__factory.abi,
-		},
-		'set',
-	);
+  //   const sbt = useContractWrite<SBT>(
+  //     {
+  //       addressOrName: contractAddress,
+  //       contractInterface: SBT__factory.abi,
+  //     },
+  //     "set"
+  //   );
 
-	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-		e.preventDefault();
-		if (hasEthereum) {
-			const inputState = inputRef.current.value;
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (hasEthereum) {
+      const inputState = inputRef.current.value;
 
 			const tx = await set({ args: inputState });
 			setStatus('loading...');
@@ -95,12 +98,13 @@ export default function Web() {
 			}
 		}
 	};
+	*/
 
-	return (
-		<div className="max-w-lg mt-36 mx-auto items-center justify-center text-center px-4">
-			<Head>
-				<title>Next.js Dapp Starter Ts</title>
-			</Head>
+  return (
+    <div className="max-w-lg mt-36 mx-auto items-center justify-center text-center px-4">
+      <Head>
+        <title>Next.js Dapp Starter Ts</title>
+      </Head>
 
 			<main className="space-y-8 flex items-center flex-col">
 				<>
@@ -117,9 +121,9 @@ export default function Web() {
 							</Button>
 						))}
 					</div> */}
-					<IdCard />
+          <IdCard />
 
-					{/* <h1 className="text-4xl font-semibold mb-8">Next.js Dapp Starter Ts</h1>
+          {/* <h1 className="text-4xl font-semibold mb-8">Next.js Dapp Starter Ts</h1>
 					<p>Store Value : {currentStore} </p>
 					<p>transaction status : {status} </p>
 					<div className="space-y-8">
@@ -147,8 +151,8 @@ export default function Web() {
 							<WalletConnectModal />
 						</div>
 					</div> */}
-				</>
-			</main>
-		</div>
-	);
+        </>
+      </main>
+    </div>
+  );
 }
