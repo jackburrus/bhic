@@ -116,27 +116,27 @@ export function IdCard() {
     // get the image to ipfs
     const osStandardNft = {
       image: imageBlob,
-      name: "to name",
-      description: "BHIC",
-      properties: {
-        external_url: "https://boredhumaninternetclub.com",
-        name: "BHIC #",
-        attributes: [
-          {
-            trait_type: "age",
-            value: age,
-          },
-          {
-            trait_type: "mood",
-            value: mood,
-          },
-          {
-            trait_type: "gender",
-            value: gender,
-          },
-        ],
-        authors: [{ name: "us" }],
-      },
+      name: "BHIC",
+      description: "image for bored human",
+      // properties: {
+      //   external_url: "https://boredhumaninternetclub.com",
+      //   name: "BHIC #",
+      //   attributes: [
+      //     {
+      //       trait_type: "age",
+      //       value: age,
+      //     },
+      //     {
+      //       trait_type: "mood",
+      //       value: mood,
+      //     },
+      //     {
+      //       trait_type: "gender",
+      //       value: gender,
+      //     },
+      //   ],
+      //   authors: [{ name: "us" }],
+      // },
     };
 
     const client = new NFTStorage({ token: API_KEY });
