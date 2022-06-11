@@ -11,6 +11,10 @@ import {
 import { Image } from "../models/image";
 import multer from "multer";
 
+// implements nodejs wrappers for HTMLCanvasElement, HTMLImageElement, ImageData
+import * as canvas from "canvas";
+import * as faceapi from "face-api.js";
+
 const upload = multer({
   limits: {
     fileSize: 4000000,
@@ -34,6 +38,11 @@ router.post(
       throw new BadRequestError("image not found");
     }
     const imageUpload = req.file.buffer;
+
+    const regionsToExtract = [new faceapi.Rect(0, 0, 100, 100)];
+    // actually extractFaces is meant to extract face regions from bounding boxes
+    // but you can also use it to extract any other region
+    // const canvases = await faceapi.extractFaces(imageUpload, regionsToExtract)
 
     const { humanId } = req.body;
 

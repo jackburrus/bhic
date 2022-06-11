@@ -9,7 +9,7 @@ const sbt_contract_address = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 export function IdCard() {
 	//fetch ethereum address
 	const webcamRef = useRef<Webcam>(null);
-	const { age, setAge, setMood, setGender, gender, mood, setImage } = useGlobalStateContext();
+	const { age, setAge, setMood, setGender, gender, mood, setUri } = useGlobalStateContext();
 
 	const [{ data: account }] = useAccount();
 
@@ -87,11 +87,30 @@ export function IdCard() {
 		faceDetected();
 	}, []);
 
+	const showStoreNFT = () => {
+		if (!uri) {
+			return storeExampleNFT(
+				`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAM0AAAD
+	NCAMAAAAsYgRbAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5c
+	cllPAAAABJQTFRF3NSmzMewPxIG//ncJEJsldTou1jHgAAAARBJREFUeNrs2EEK
+	gCAQBVDLuv+V20dENbMY831wKz4Y/VHb/5RGQ0NDQ0NDQ0NDQ0NDQ0NDQ
+	0NDQ0NDQ0NDQ0NDQ0NDQ0NDQ0PzMWtyaGhoaGhoaGhoaGhoaGhoxtb0QGho
+	aGhoaGhoaGhoaGhoaMbRLEvv50VTQ9OTQ5OpyZ01GpM2g0bfmDQaL7S+ofFC6x
+	v3ZpxJiywakzbvd9r3RWPS9I2+MWk0+kbf0Hih9Y17U0nTHibrDDQ0NDQ0NDQ0
+	NDQ0NDQ0NTXbRSL/AK72o6GhoaGhoRlL8951vwsNDQ0NDQ1NDc0WyHtDTEhD
+	Q0NDQ0NTS5MdGhoaGhoaGhoaGhoaGhoaGhoaGhoaGposzSHAAErMwwQ2HwRQ
+	AAAAAElFTkSuQmCC`,
+			);
+		} else return '';
+	};
+
 	return (
 		<>
 			<div className=" bg-[#f8f5de] shadow-customInset p-6 rounded-md flex flex-row w-[700px] h-96">
 				<div className="flex border border-amber-200">
 					<div className="flex ml-1 -rotate-2 w-1/3 flex-col justify-between  items-start mr-[2px]">
+						{showStoreNFT()}
+
 						<Webcam ref={webcamRef} className="z-10 rounded-sm" videoConstraints={{ width: 700, height: 800 }} />
 						<img
 							className="absolute bottom-2 right-10 -rotate-[25deg] rounded-full "

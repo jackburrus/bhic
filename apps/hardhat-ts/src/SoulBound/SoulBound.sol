@@ -9,7 +9,6 @@ pragma solidity 0.8.9;
  */
 
 contract SBT {
-
     struct Soul {
         string identity;
         // add issuer specific fields below
