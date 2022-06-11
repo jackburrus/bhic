@@ -11,7 +11,6 @@ import { ethers } from "ethers";
 import * as React from "react";
 import Webcam from "react-webcam";
 import { IdCard } from "@/components/IdCard";
-import UploadImage from "@/components/UploadImage";
 import { File, NFTStorage } from "nft.storage";
 import { useGlobalStateContext } from "@/components/GlobalStateProvider";
 
