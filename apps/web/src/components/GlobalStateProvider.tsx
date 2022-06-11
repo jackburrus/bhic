@@ -6,9 +6,10 @@ type GlobalStateProviderProps = {
 const GlobalStateContext = createContext<GlobalStateProviderProps>(undefined);
 
 export function GlobalStateProvider<GlobalStateProviderProps>({ children }) {
-	const [age, setAge] = useState('30');
+	const [age, setAge] = useState(null);
 	const [mood, setMood] = useState(null);
 	const [gender, setGender] = useState(null);
+	const [image, setImage] = useState();
 
 	const contextValue = useMemo(
 		() => ({

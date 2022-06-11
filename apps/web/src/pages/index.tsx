@@ -19,7 +19,7 @@ const sbt_contract_address = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 
 export default function Web() {
 	const inputRef = React.useRef<HTMLInputElement>();
-	const { age } = useGlobalStateContext();
+	const { age, mood, gender } = useGlobalStateContext();
 	const [status, setStatus] = React.useState<'loading...' | 'complete'>('complete');
 	const [currentStore, setCurrentStore] = React.useState('');
 	const [{ data: account }] = useAccount();
@@ -53,9 +53,9 @@ export default function Web() {
 			try {
 				const tx = await sbtContract.mint(account.address, {
 					soul: account.address,
-					age: '10',
-					mood: 'happy',
-					gender: 'male',
+					age: age,
+					mood: mood,
+					gender: gender,
 					identity: account.address,
 				});
 				if (tx.data) {
@@ -78,7 +78,7 @@ export default function Web() {
 			const signer = provider.getSigner();
 			const sbtContract = SBT__factory.connect(sbt_contract_address, signer);
 			try {
-				const soul = await sbtContract.hasSoul(account.address);
+				const soul = await sbtContract.getSoul(account.address);
 				console.log(soul);
 			} catch (err) {
 				console.log(err);
@@ -98,7 +98,9 @@ export default function Web() {
 						<WalletConnectModal />
 					</div>
 					<h1 className="text-4xl font-semibold mb-8">Mint your own ID</h1>
-					<div onClick={mint}>Mint</div>
+					<div className="cursor-pointer" onClick={mint}>
+						Mint
+					</div>
 					<div onClick={fetchSoul}>Get Soul</div>
 					{/* <div>Active ID type: {activeIdType}</div> */}
 					{/* <div className="flex items-center justify-center  flex-row ">
