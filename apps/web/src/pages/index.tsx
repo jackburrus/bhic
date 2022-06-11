@@ -1,16 +1,19 @@
 import { Button, WalletConnectModal } from 'ui';
 import Head from 'next/head';
 import { useContractWrite, useAccount } from 'wagmi';
-import { Storage__factory, Storage } from '@/typechain';
+import { Storage__factory, Storage, SBT, SBT__factory } from '@/typechain';
 import { ethers } from 'ethers';
 import * as React from 'react';
 import Webcam from 'react-webcam';
 import { IdCard } from '@/components/IdCard';
+import UploadImage from '@/components/UploadImage';
 
 const hasEthereum = typeof window !== 'undefined' && typeof window.ethereum !== 'undefined';
 const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
 
 const ID_TYPES = ['DEGEN', 'STANDARD', 'DPRK', 'TUPAC', 'WORKPLACE'];
+
+const sbt_contract_address = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 
 export default function Web() {
 	const inputRef = React.useRef<HTMLInputElement>();
@@ -22,6 +25,14 @@ export default function Web() {
 		{
 			addressOrName: contractAddress,
 			contractInterface: Storage__factory.abi,
+		},
+		'set',
+	);
+
+	const sbt = useContractWrite<SBT>(
+		{
+			addressOrName: contractAddress,
+			contractInterface: SBT__factory.abi,
 		},
 		'set',
 	);
@@ -59,6 +70,21 @@ export default function Web() {
 		}
 		fetchStore();
 	}, []);
+	React.useEffect(() => {
+		async function fetchSBT() {
+			if (hasEthereum) {
+				const provider = new ethers.providers.Web3Provider(window.ethereum as any);
+				const storageContract = SBT__factory.connect(sbt_contract_address, provider);
+				try {
+					const data = await storageContract.getSoul();
+					setCurrentStore(data);
+				} catch (err) {
+					console.log('EfetchStorerror: ', err);
+				}
+			}
+		}
+		fetchSBT();
+	}, []);
 
 	return (
 		<div className="max-w-lg mt-36 mx-auto items-center justify-center text-center px-4">
@@ -68,17 +94,17 @@ export default function Web() {
 
 			<main className="space-y-8 flex items-center flex-col">
 				<>
-					<h1 className="text-4xl font-semibold mb-8">Select an ID Style</h1>
-					<div>Active ID type: {activeIdType}</div>
-					<div className="flex items-center justify-center  flex-row ">
+					<h1 className="text-4xl font-semibold mb-8">Mint your own ID</h1>
+					{/* <div>Active ID type: {activeIdType}</div> */}
+					{/* <div className="flex items-center justify-center  flex-row ">
 						{ID_TYPES.map((idType) => (
 							<Button onClick={() => setActiveIdType(idType)} key={idType} className="mr-2 mb-4">
 								{idType}
 							</Button>
 						))}
-					</div>
-
+					</div> */}
 					<IdCard />
+
 					{/* <h1 className="text-4xl font-semibold mb-8">Next.js Dapp Starter Ts</h1>
 					<p>Store Value : {currentStore} </p>
 					<p>transaction status : {status} </p>
