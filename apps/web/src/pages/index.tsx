@@ -1,12 +1,13 @@
 import { Button, WalletConnectModal } from 'ui';
 import Head from 'next/head';
-import { useContractWrite, useAccount, useBlockNumber } from 'wagmi';
+import { useContractWrite, useAccount, useBlockNumber, useContractRead } from 'wagmi';
 import { Storage__factory, Storage, SBT, SBT__factory } from '@/typechain';
 import { ethers } from 'ethers';
 import * as React from 'react';
 import Webcam from 'react-webcam';
 import { IdCard } from '@/components/IdCard';
 import UploadImage from '@/components/UploadImage';
+import { File, NFTStorage } from 'nft.storage';
 
 const hasEthereum = typeof window !== 'undefined' && typeof window.ethereum !== 'undefined';
 const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
@@ -15,19 +16,19 @@ const ID_TYPES = ['DEGEN', 'STANDARD', 'DPRK', 'TUPAC', 'WORKPLACE'];
 
 const sbt_contract_address = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 
+//create context for the global state
+const GlobalStateContext = React.createContext({
+	age: '',
+	mood: '',
+	gender: '',
+});
+
 export default function Web() {
 	const inputRef = React.useRef<HTMLInputElement>();
 	const [status, setStatus] = React.useState<'loading...' | 'complete'>('complete');
 	const [currentStore, setCurrentStore] = React.useState('');
 	const [{ data: account }] = useAccount();
 	const [activeIdType, setActiveIdType] = React.useState(ID_TYPES[0]);
-	const [{}, set] = useContractWrite<Storage>(
-		{
-			addressOrName: contractAddress,
-			contractInterface: Storage__factory.abi,
-		},
-		'set',
-	);
 
 	const sbt = useContractWrite<SBT>(
 		{
@@ -37,39 +38,15 @@ export default function Web() {
 		'set',
 	);
 
-	async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-		e.preventDefault();
-		if (hasEthereum) {
-			const inputState = inputRef.current.value;
-
-			const tx = await set({ args: inputState });
-			setStatus('loading...');
-			if (tx.data) {
-				const receipt = await tx.data.wait();
-				if (receipt.status === 1) {
-					setCurrentStore(inputState);
-					inputRef.current.value = '';
-				}
-				setStatus('complete');
-			}
-		}
-	}
-
-	React.useEffect(() => {
-		async function fetchStore() {
-			if (hasEthereum) {
-				const provider = new ethers.providers.Web3Provider(window.ethereum as any);
-				const storageContract = Storage__factory.connect(contractAddress, provider);
-				try {
-					const data = await storageContract.retrieve();
-					setCurrentStore(data);
-				} catch (err) {
-					console.log('EfetchStorerror: ', err);
-				}
-			}
-		}
-		fetchStore();
-	}, []);
+	// const soulRead = useContractRead<SBT>(
+	// 	{
+	// 		addressOrName: contractAddress,
+	// 		contractInterface: SBT__factory.abi,
+	// 	},
+	// 	`getSoul`,
+	// 	{ args: [account.address] },
+	// );
+	// console.log(soulRead);
 
 	const mint = async () => {
 		if (hasEthereum) {
@@ -78,10 +55,11 @@ export default function Web() {
 			const sbtContract = SBT__factory.connect(sbt_contract_address, signer);
 			try {
 				const tx = await sbtContract.mint(account.address, {
-					identity: 'jack',
-					score: 10,
-					timestamp: 1,
-					url: 'https://google.com',
+					soul: account.address,
+					age: '10',
+					mood: 'happy',
+					gender: 'male',
+					identity: account.address,
 				});
 				if (tx.data) {
 					console.log(tx);
@@ -90,6 +68,21 @@ export default function Web() {
 					// 	setCurrentStore(receipt.gasUsed);
 					// }
 				}
+			} catch (err) {
+				console.log(err);
+			}
+		}
+	};
+
+	const fetchSoul = async () => {
+		//read soul contract
+		if (hasEthereum) {
+			const provider = new ethers.providers.Web3Provider(window.ethereum as any);
+			const signer = provider.getSigner();
+			const sbtContract = SBT__factory.connect(sbt_contract_address, signer);
+			try {
+				const soul = await sbtContract.hasSoul(account.address);
+				console.log(soul);
 			} catch (err) {
 				console.log(err);
 			}
@@ -109,6 +102,7 @@ export default function Web() {
 					</div>
 					<h1 className="text-4xl font-semibold mb-8">Mint your own ID</h1>
 					<div onClick={mint}>Mint</div>
+					<div onClick={fetchSoul}>Get Soul</div>
 					{/* <div>Active ID type: {activeIdType}</div> */}
 					{/* <div className="flex items-center justify-center  flex-row ">
 						{ID_TYPES.map((idType) => (

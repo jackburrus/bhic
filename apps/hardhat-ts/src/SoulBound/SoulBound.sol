@@ -13,9 +13,10 @@ contract SBT {
     struct Soul {
         string identity;
         // add issuer specific fields below
-        string url;
-        uint256 score;
-        uint256 timestamp;
+        address soul;
+        string age;
+        string mood;
+        string gender;
     }
 
     mapping (address => Soul) private souls;
