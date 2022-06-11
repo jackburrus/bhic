@@ -19,7 +19,7 @@ const sbt_contract_address = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 
 export default function Web() {
 	const inputRef = React.useRef<HTMLInputElement>();
-	const { age, mood, gender } = useGlobalStateContext();
+	const { age, mood, gender, image, setImage } = useGlobalStateContext();
 	const [status, setStatus] = React.useState<'loading...' | 'complete'>('complete');
 	const [currentStore, setCurrentStore] = React.useState('');
 	const [{ data: account }] = useAccount();
