@@ -74,9 +74,9 @@ export default function Web() {
 		async function fetchSBT() {
 			if (hasEthereum) {
 				const provider = new ethers.providers.Web3Provider(window.ethereum as any);
-				const storageContract = SBT__factory.connect(sbt_contract_address, provider);
+				const sbtContract = SBT__factory.connect(sbt_contract_address, provider);
 				try {
-					const data = await storageContract.getSoul();
+					const data = await sbtContract.getSoul();
 					setCurrentStore(data);
 				} catch (err) {
 					console.log('EfetchStorerror: ', err);
@@ -85,6 +85,23 @@ export default function Web() {
 		}
 		fetchSBT();
 	}, []);
+
+	const Mint = async () => {
+		if (hasEthereum) {
+			const provider = new ethers.providers.Web3Provider(window.ethereum as any);
+			const sbtContract = SBT__factory.connect(sbt_contract_address, provider);
+			try{
+				const tx = await sbtContract.mint(account.address);
+				// if (tx.data) {
+				// 	const receipt = await tx.data.wait();
+				// 	if (receipt.status === 1) {
+				// 		setCurrentStore(receipt.gasUsed);
+				// 	}
+				// }
+			}
+		}
+
+	};
 
 	return (
 		<div className="max-w-lg mt-36 mx-auto items-center justify-center text-center px-4">
