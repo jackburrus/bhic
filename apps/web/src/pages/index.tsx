@@ -15,7 +15,7 @@ const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
 
 const ID_TYPES = ['DEGEN', 'STANDARD', 'DPRK', 'TUPAC', 'WORKPLACE'];
 
-const sbt_contract_address = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
+const sbt_contract_address = '0x80593329ba8a82f5ceaff010b832026fb1ea4f38';
 
 export default function Web() {
 	const inputRef = React.useRef<HTMLInputElement>();
@@ -81,10 +81,6 @@ export default function Web() {
 
 	return (
 		<div className="max-w-lg mt-36 mx-auto items-center justify-center text-center px-4">
-			<Head>
-				<title>Next.js Dapp Starter Ts</title>
-			</Head>
-
 			<main className="space-y-8 flex items-center flex-col">
 				<>
 					{/* <div className="flex flex-col space-y-4">

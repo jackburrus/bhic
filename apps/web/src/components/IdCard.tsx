@@ -86,6 +86,19 @@ export function IdCard() {
 		}
 	};
 
+	const convertMood = (mood) => {
+		switch (mood) {
+			case 'happy':
+				return 'ETH is at $4K Happy';
+			case 'sad':
+				return 'rekt';
+			case 'angry':
+				return 'karen';
+			case 'neutral':
+				return 'dgaf';
+		}
+	};
+
 	useEffect(() => {
 		faceDetected();
 	}, []);
@@ -123,9 +136,9 @@ export function IdCard() {
 							<div>Gender</div>
 							<div>{gender}</div>
 						</div>
-						<div className="border-b flex-1 border-amber-300 flex w-full items-start flex-col">
+						<div className=" flex-1  flex w-full items-start flex-col">
 							<div>Mood</div>
-							<div>{mood}</div>
+							<div>{convertMood(mood)}</div>
 						</div>
 					</div>
 				</div>
