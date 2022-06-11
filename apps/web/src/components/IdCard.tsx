@@ -9,12 +9,10 @@ const sbt_contract_address = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 export function IdCard() {
 	//fetch ethereum address
 	const webcamRef = useRef<Webcam>(null);
-	const { age } = useGlobalStateContext();
+	const { age, setAge, gender, mood, setGender, setMood } = useGlobalStateContext();
 
 	const [{ data: account }] = useAccount();
 
-	const [gender, setGender] = useState(null);
-	const [mood, setMood] = useState(null);
 	const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
 	const capture = useCallback(() => {
@@ -97,7 +95,7 @@ export function IdCard() {
 			<div className=" bg-[#f8f5de] shadow-customInset p-6 rounded-md flex flex-row w-[700px] h-96">
 				<div className="flex border border-amber-200">
 					<div className="flex ml-1 -rotate-2 w-1/3 flex-col justify-between  items-start mr-[2px]">
-						{/* <Webcam ref={webcamRef} className="z-10 rounded-sm" videoConstraints={{ width: 700, height: 800 }} /> */}
+						<Webcam ref={webcamRef} className="z-10 rounded-sm" videoConstraints={{ width: 700, height: 800 }} />
 						<img
 							className="absolute bottom-2 right-10 -rotate-[25deg] rounded-full "
 							alt="id-card"
@@ -105,9 +103,9 @@ export function IdCard() {
 							width={106}
 							src="/ethlogo.png"
 						/>
-						<div onClick={capture} className="border rounded-sm p-1 border-black px-4">
+						{/* <div onClick={capture} className="border rounded-sm p-1 border-black px-4">
 							Mint
-						</div>
+						</div> */}
 					</div>
 					<div className=" p-[8px]  flex w-3/4 flex-col ">
 						<div className=" text-5xl  border-b border-amber-300 flex-1 flex">ID</div>

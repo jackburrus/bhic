@@ -19,11 +19,13 @@ const sbt_contract_address = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 
 export default function Web() {
 	const inputRef = React.useRef<HTMLInputElement>();
-	const { age } = useGlobalStateContext();
+	const { age, image, gender, mood, setAge, setMood, setGender } = useGlobalStateContext();
 	const [status, setStatus] = React.useState<'loading...' | 'complete'>('complete');
 	const [currentStore, setCurrentStore] = React.useState('');
 	const [{ data: account }] = useAccount();
 	const [activeIdType, setActiveIdType] = React.useState(ID_TYPES[0]);
+	const [localSoul, setLocalSoul] = React.useState(null);
+	const [minted, setMinted] = React.useState(false);
 
 	const sbt = useContractWrite<SBT>(
 		{
@@ -33,35 +35,22 @@ export default function Web() {
 		'set',
 	);
 
-	// const soulRead = useContractRead<SBT>(
-	// 	{
-	// 		addressOrName: contractAddress,
-	// 		contractInterface: SBT__factory.abi,
-	// 	},
-	// 	`getSoul`,
-	// 	{ args: [account.address] },
-	// );
-	// console.log(soulRead);
-
 	const mint = async () => {
 		if (hasEthereum) {
 			const provider = new ethers.providers.Web3Provider(window.ethereum as any);
 			const signer = provider.getSigner();
 			const sbtContract = SBT__factory.connect(sbt_contract_address, signer);
 			try {
+				console.log(account.address);
 				const tx = await sbtContract.mint(account.address, {
 					soul: account.address,
-					age: '10',
-					mood: 'happy',
-					gender: 'male',
+					age: age,
+					mood: mood,
+					gender: gender,
 					identity: account.address,
 				});
 				if (tx.data) {
 					console.log(tx);
-					// const receipt = await tx.data.wait();
-					// if (receipt.status === 1) {
-					// 	setCurrentStore(receipt.gasUsed);
-					// }
 				}
 			} catch (err) {
 				console.log(err);
@@ -70,7 +59,6 @@ export default function Web() {
 	};
 
 	const fetchSoul = async () => {
-		//read soul contract
 		if (hasEthereum) {
 			const provider = new ethers.providers.Web3Provider(window.ethereum as any);
 			const signer = provider.getSigner();
@@ -78,11 +66,18 @@ export default function Web() {
 			try {
 				const soul = await sbtContract.getSoul(account.address);
 				console.log(soul);
+				setAge(soul.age);
+				setGender(soul.gender);
+				setMood(soul.mood);
 			} catch (err) {
 				console.log(err);
 			}
 		}
 	};
+
+	React.useEffect(() => {
+		fetchSoul();
+	}, []);
 
 	return (
 		<div className="max-w-lg mt-36 mx-auto items-center justify-center text-center px-4">
@@ -92,50 +87,23 @@ export default function Web() {
 
 			<main className="space-y-8 flex items-center flex-col">
 				<>
-					<div className="flex flex-col space-y-4">
+					{/* <div className="flex flex-col space-y-4">
 						<WalletConnectModal />
-					</div>
+					</div> */}
 					<h1 className="text-4xl font-semibold mb-8">Mint your own ID</h1>
-					<div onClick={mint}>Mint</div>
-					<div onClick={fetchSoul}>Get Soul</div>
-					{/* <div>Active ID type: {activeIdType}</div> */}
-					{/* <div className="flex items-center justify-center  flex-row ">
-						{ID_TYPES.map((idType) => (
-							<Button onClick={() => setActiveIdType(idType)} key={idType} className="mr-2 mb-4">
-								{idType}
-							</Button>
-						))}
-					</div> */}
-					<IdCard />
+					<div className="flex w-56 justify-evenly flex flex-row">
+						<div className="border cursor-pointer p-2 border-black rounded px-5" onClick={mint}>
+							Mint
+						</div>
+						<div className=" cursor-pointer border p-2 border-black rounded px-5" onClick={fetchSoul}>
+							Get ID
+						</div>
+					</div>
+					<div>{minted && 'Thanks for minting you ID'}</div>
 
-					{/* <h1 className="text-4xl font-semibold mb-8">Next.js Dapp Starter Ts</h1>
-					<p>Store Value : {currentStore} </p>
-					<p>transaction status : {status} </p>
-					<div className="space-y-8">
-						<div className="space-y-8">
-							<form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
-								<input
-									className="border p-4 text-center"
-									placeholder="Write a new greeting"
-									name="datas"
-									ref={inputRef}
-									type="text"
-									min={1}
-									required
-								/>
-								<Button
-									className="disabled:bg-blue-400 disabled:cursor-not-allowed"
-									type="submit"
-									disabled={account?.address === undefined}
-								>
-									Say it??
-								</Button>
-							</form>
-						</div>
-						<div className="flex flex-col space-y-4">
-							<WalletConnectModal />
-						</div>
-					</div> */}
+					<div>{localSoul && 'You already have an ID'}</div>
+
+					<IdCard />
 				</>
 			</main>
 		</div>
