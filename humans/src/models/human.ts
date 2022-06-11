@@ -1,14 +1,21 @@
 import mongoose from "mongoose";
 
 interface HumanAttrs {
-  title: string;
+  title: string; // bored human #0000
+  emotion: string;
+  age: string;
+  gender: number;
   mintedToAddress?: string;
-  // image, other metadata to do
+  value?: string;
 }
 
 interface HumanDoc extends mongoose.Document {
   title: string;
+  emotion: string;
+  age: string;
+  gender: number;
   mintedToAddress: string;
+  value: string;
 }
 
 interface HumanModel extends mongoose.Model<HumanDoc> {
@@ -21,7 +28,26 @@ const humanSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-
+    emotion: {
+      type: String,
+      required: true,
+    },
+    age: {
+      type: Number,
+      required: true,
+    },
+    gender: {
+      type: String,
+      required: true,
+    },
+    mintedToAddress: {
+      type: String,
+      required: true,
+    },
+    value: {
+      type: Number,
+      required: true,
+    },
   },
   {
     toJSON: {

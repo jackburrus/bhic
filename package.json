@@ -24,8 +24,8 @@
   },
   "devDependencies": {
     "prettier": "^2.5.1",
-    "turbo": "latest",
-    "ts-node": "^10.4.0"
+    "ts-node": "^10.4.0",
+    "turbo": "latest"
   },
   "turbo": {
     "pipeline": {
