@@ -80,18 +80,18 @@ export default function Web() {
 	}, []);
 
 	return (
-		<div className="max-w-lg mt-36 mx-auto items-center justify-center text-center px-4">
-			<main className="space-y-8 flex items-center flex-col">
+		<div className="w-screen h-screen bg-gradient-to-r from-rose-400 to-orange-300  mx-auto items-center justify-center text-center ">
+			<main className="space-y-4 flex items-center flex-col ">
 				<>
 					{/* <div className="flex flex-col space-y-4">
 						<WalletConnectModal />
 					</div> */}
-					<h1 className="text-4xl font-semibold mb-8">Mint your own ID</h1>
-					<div className="flex w-56 justify-evenly flex flex-row">
-						<div className="border cursor-pointer p-2 border-black rounded px-5" onClick={mint}>
+					<h1 className="text-4xl font-semibold mt-24 text-white ">Mint your own ID</h1>
+					<div className="flex  w-56 justify-evenly  flex-row">
+						<div className="border border-white text-white cursor-pointer p-2  rounded px-5" onClick={mint}>
 							Mint
 						</div>
-						<div className=" cursor-pointer border p-2 border-black rounded px-5" onClick={fetchSoul}>
+						<div className=" cursor-pointer border p-2 border-white text-white rounded px-5" onClick={fetchSoul}>
 							Get ID
 						</div>
 					</div>

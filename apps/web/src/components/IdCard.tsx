@@ -4,6 +4,13 @@ import Webcam from 'react-webcam';
 import { useAccount } from 'wagmi';
 import { useGlobalStateContext } from './GlobalStateProvider';
 
+const truncateRegex = /^(0x[a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/;
+const truncateEthAddress = (address: string) => {
+	const match = address.match(truncateRegex);
+	if (!match) return address;
+	return `${match[1]}…${match[2]}`;
+};
+
 const sbt_contract_address = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 
 export function IdCard() {
@@ -81,7 +88,7 @@ export function IdCard() {
 			webcam.height = webcam.videoHeight;
 
 			const video = webcamRef.current.video;
-			// console.log(video);
+
 			fetchAgeAndGender(video);
 		}
 	};
@@ -96,6 +103,8 @@ export function IdCard() {
 				return 'karen';
 			case 'neutral':
 				return 'dgaf';
+			case 'fearful':
+				return 'ahhhhhhhhhhhhhhhhh!';
 		}
 	};
 
@@ -105,11 +114,12 @@ export function IdCard() {
 
 	return (
 		<>
-			<div className=" bg-[#f8f5de] shadow-customInset p-6 rounded-md flex flex-row w-[700px] h-96">
+			<div className=" bg-[#f8f5de] drop-shadow-lg shadow-customInset p-6 rounded-lg flex flex-row w-[700px] h-96">
 				<div className="flex border border-amber-200">
 					<div className="flex ml-1 -rotate-2 w-1/3 flex-col justify-between  items-start mr-[2px]">
 						<Webcam ref={webcamRef} className="z-10 rounded-sm" videoConstraints={{ width: 700, height: 800 }} />
 						<img
+							onClick={faceDetected}
 							className="absolute bottom-2 right-10 -rotate-[25deg] rounded-full "
 							alt="id-card"
 							height={144}
@@ -125,7 +135,7 @@ export function IdCard() {
 						<div className="border-b flex-1 border-amber-300 flex w-full items-start flex-col">
 							<div>Address</div>
 
-							<div className="text-sm">{account?.address.slice(0, 10) + '...'}</div>
+							<div className="text-sm">{truncateEthAddress(account.address)}</div>
 						</div>
 						<div className="border-b flex-1 border-amber-300 flex w-full items-start flex-col">
 							<div>Age</div>
