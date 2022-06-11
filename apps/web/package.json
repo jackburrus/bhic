@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.4.3",
+    "@tensorflow/tfjs-node": "^3.18.0",
+    "canvas": "^2.9.1",
     "ethers": "^5.5.3",
+    "face-api.js": "^0.22.2",
     "next": "12.0.7",
     "react": "17.0.2",
     "react-dom": "17.0.2",
