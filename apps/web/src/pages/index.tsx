@@ -91,6 +91,7 @@ export default function Web() {
 				setAge(soul.age);
 				setGender(soul.gender);
 				setMood(soul.mood);
+				setLocalSoul(soul);
 			} catch (err) {
 				console.log(err);
 			}
@@ -119,13 +120,21 @@ export default function Web() {
 						<div className="border border-white text-white cursor-pointer p-2  rounded px-5" onClick={mint}>
 							Mint
 						</div>
-						<div className=" cursor-pointer border p-2 border-white text-white rounded px-5" onClick={fetchSoul}>
+						<div
+							className=" cursor-pointer border p-2 border-white text-white rounded px-5"
+							onClick={() => {
+								fetchSoul();
+								if (localSoul) {
+									toast.success('Loaded your minted credentials');
+								}
+							}}
+						>
 							Get ID
 						</div>
 					</div>
 					<div>{minted && 'Thanks for minting you ID'}</div>
 
-					<div>{localSoul && 'You already have an ID'}</div>
+					{/* <div>{localSoul && 'You already have an ID'}</div> */}
 
 					<IdCard selectedOption={selectedOption} />
 					<ToastContainer />

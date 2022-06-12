@@ -3,8 +3,9 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import Webcam from 'react-webcam';
 import { useAccount } from 'wagmi';
 import { useGlobalStateContext } from './GlobalStateProvider';
-
-const truncateRegex = /^(0x[a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/;
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+const truncateRegex = /^(0x[a-zA-Z0-9]{8})[a-zA-Z0-9]+([a-zA-Z0-9]{8})$/;
 const truncateEthAddress = (address: string) => {
 	const match = address.match(truncateRegex);
 	if (!match) return address;
@@ -104,7 +105,7 @@ export function IdCard({ selectedOption }) {
 			case 'neutral':
 				return 'dgaf';
 			case 'fearful':
-				return 'ahhhhhhhhhhhhhhhhh!';
+				return 'scurred';
 		}
 	};
 
@@ -112,11 +113,10 @@ export function IdCard({ selectedOption }) {
 		faceDetected();
 	}, []);
 
-	console.log(selectedOption);
-
 	if (selectedOption.value === 'hawaii')
 		return (
 			<>
+				<ToastContainer />
 				<div className=" drop-shadow-lg shadow-customInset rounded-lg flex flex-row w-[700px] h-96">
 					<img src="/hawaii.png" />
 					<Webcam
@@ -124,6 +124,35 @@ export function IdCard({ selectedOption }) {
 						className="z-10 rounded-sm absolute left-3 top-1"
 						videoConstraints={{ width: 225, height: 260 }}
 					/>
+					<div className="font-bold opacity-80 text-[#2B2B2B] absolute top-20 text-lg left-[360px]">
+						{account?.address && truncateEthAddress(account?.address)}
+					</div>
+					<div
+						onClick={faceDetected}
+						className=" bottom-12 font-bold opacity-80 text-[#2B2B2B] left-5 text-xl absolute"
+					>
+						McDegen
+					</div>
+					<div className="  font-bold opacity-80 text-[#2B2B2B] left-[260px] top-[235px] text-lg absolute">
+						{/* //format new date day month year */}
+						{new Date().toLocaleDateString('en-US', {
+							month: 'short',
+							day: 'numeric',
+							year: 'numeric',
+						})}
+					</div>
+					<div className="font-bold flex flex-col items-start opacity-90 text-[#2B2B2B] left-[255px] top-[265px] text-lg absolute">
+						<div className=" text-[#2B2B2B]">GENDER</div>
+						<div className=" text-[#2B2B2B]">{gender}</div>
+					</div>
+					<div className="font-bold flex flex-col items-start opacity-90 text-[#2B2B2B] left-[350px] top-[265px] text-lg absolute">
+						<div className=" text-[#2B2B2B]">AGE</div>
+						<div className=" text-[#2B2B2B]">{age}</div>
+					</div>
+					<div className="font-bold flex flex-col items-start opacity-90 text-[#2B2B2B] left-[450px] top-[265px] text-lg absolute">
+						<div className=" text-[#2B2B2B]">VIBE</div>
+						<div className=" text-[#2B2B2B]">{convertMood(mood)}</div>
+					</div>
 				</div>
 			</>
 		);
@@ -134,6 +163,7 @@ export function IdCard({ selectedOption }) {
 				<div className="flex border border-amber-200">
 					<div className="flex ml-1 -rotate-2 w-1/3 flex-col justify-between  items-start mr-[2px]">
 						<Webcam ref={webcamRef} className="z-10 rounded-sm" videoConstraints={{ width: 700, height: 800 }} />
+
 						<img
 							onClick={faceDetected}
 							className="absolute bottom-2 right-10 -rotate-[25deg] rounded-full "
