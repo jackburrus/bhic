@@ -20,3 +20,13 @@
 
 ## What's next for BHIC
 ### Extracting additional attributes that can be assumed by facial analysis, deploying the base NFT on l1, with different identification types on optimism.
+
+
+## To run locally
+
+
+
+    pnpm install
+    pnpm dev
+
+```
