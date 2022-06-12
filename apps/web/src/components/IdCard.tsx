@@ -4,7 +4,7 @@ import Webcam from 'react-webcam';
 import { useAccount } from 'wagmi';
 import { useGlobalStateContext } from './GlobalStateProvider';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import 'react-toastify/dist/ReactToastify.css';
 const truncateRegex = /^(0x[a-zA-Z0-9]{8})[a-zA-Z0-9]+([a-zA-Z0-9]{8})$/;
 const truncateEthAddress = (address: string) => {
 	const match = address.match(truncateRegex);
