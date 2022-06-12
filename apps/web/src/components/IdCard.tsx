@@ -13,7 +13,7 @@ const truncateEthAddress = (address: string) => {
 
 const sbt_contract_address = '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512';
 
-export function IdCard() {
+export function IdCard({ selectedOption }) {
 	//fetch ethereum address
 	const webcamRef = useRef<Webcam>(null);
 	const { age, setAge, gender, mood, setGender, setMood } = useGlobalStateContext();
@@ -111,6 +111,22 @@ export function IdCard() {
 	useEffect(() => {
 		faceDetected();
 	}, []);
+
+	console.log(selectedOption);
+
+	if (selectedOption.value === 'hawaii')
+		return (
+			<>
+				<div className=" drop-shadow-lg shadow-customInset rounded-lg flex flex-row w-[700px] h-96">
+					<img src="/hawaii.png" />
+					<Webcam
+						ref={webcamRef}
+						className="z-10 rounded-sm absolute left-3 top-1"
+						videoConstraints={{ width: 225, height: 260 }}
+					/>
+				</div>
+			</>
+		);
 
 	return (
 		<>

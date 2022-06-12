@@ -12,6 +12,7 @@ import { useGlobalStateContext } from '@/components/GlobalStateProvider';
 import { ToastContainer, toast } from 'react-toastify';
 import Link from 'next/link';
 import 'react-toastify/dist/ReactToastify.css';
+import Select from 'react-select';
 
 const hasEthereum = typeof window !== 'undefined' && typeof window.ethereum !== 'undefined';
 const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
@@ -29,6 +30,13 @@ export default function Web() {
 	const [activeIdType, setActiveIdType] = React.useState(ID_TYPES[0]);
 	const [localSoul, setLocalSoul] = React.useState(null);
 	const [minted, setMinted] = React.useState(false);
+	const [selectedOption, setSelectedOption] = React.useState({ value: 'hawaii', label: '🌴' });
+
+	const options = [
+		{ value: 'classic', label: 'Classic' },
+		{ value: 'hawaii', label: '🌴' },
+		{ value: 'Tupac', label: 'Tupac' },
+	];
 
 	const sbt = useContractWrite<SBT>(
 		{
@@ -95,6 +103,12 @@ export default function Web() {
 
 	return (
 		<div className="w-screen h-screen bg-gradient-to-r from-rose-400 to-orange-300  mx-auto items-center justify-center text-center ">
+			<Select
+				className="w-28 absolute top-10 left-10"
+				defaultValue={selectedOption}
+				onChange={setSelectedOption}
+				options={options}
+			/>
 			<main className="space-y-4 flex items-center flex-col ">
 				<>
 					{/* <div className="flex flex-col space-y-4">
@@ -113,7 +127,7 @@ export default function Web() {
 
 					<div>{localSoul && 'You already have an ID'}</div>
 
-					<IdCard />
+					<IdCard selectedOption={selectedOption} />
 					<ToastContainer />
 				</>
 			</main>
