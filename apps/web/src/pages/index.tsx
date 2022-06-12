@@ -17,8 +17,6 @@ import Select from 'react-select';
 const hasEthereum = typeof window !== 'undefined' && typeof window.ethereum !== 'undefined';
 const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
 
-const ID_TYPES = ['DEGEN', 'STANDARD', 'DPRK', 'TUPAC', 'WORKPLACE'];
-
 const sbt_contract_address = '0x80593329ba8a82f5ceaff010b832026fb1ea4f38';
 
 export default function Web() {
@@ -27,7 +25,6 @@ export default function Web() {
 	const [status, setStatus] = React.useState<'loading...' | 'complete'>('complete');
 	const [currentStore, setCurrentStore] = React.useState('');
 	const [{ data: account }] = useAccount();
-	const [activeIdType, setActiveIdType] = React.useState(ID_TYPES[0]);
 	const [localSoul, setLocalSoul] = React.useState(null);
 	const [minted, setMinted] = React.useState(false);
 	const [selectedOption, setSelectedOption] = React.useState({ value: 'hawaii', label: '🌴' });
