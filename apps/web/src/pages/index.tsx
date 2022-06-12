@@ -110,9 +110,9 @@ export default function Web() {
 			/>
 			<main className="space-y-4 flex items-center flex-col ">
 				<>
-					{/* <div className="flex flex-col space-y-4">
+					<div className="flex absolute top-10 right-10 flex-col space-y-4">
 						<WalletConnectModal />
-					</div> */}
+					</div>
 					<h1 className="text-4xl font-semibold mt-24 text-white ">Mint your own ID</h1>
 					<div className="flex  w-56 justify-evenly  flex-row">
 						<div className="border border-white text-white cursor-pointer p-2  rounded px-5" onClick={mint}>
