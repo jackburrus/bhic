@@ -110,15 +110,14 @@ export function IdCard({ selectedOption }) {
 	};
 
 	const convertAge = (age) => {
-		switch (age) {
-			case age < 25:
-				return 'zoomer';
-			case age > 25 && age < 40:
-				return 'boomer';
-			case age > 40 && age < 75:
-				return 'old af';
-			default:
-				return Math.floor(age);
+		if (age < 25) {
+			return 'Zoomer';
+		} else if (age > 25 && age < 40) {
+			return 'Boomer';
+		} else if (age > 40 && age < 75) {
+			return 'Old AF';
+		} else {
+			return 'Other';
 		}
 	};
 
@@ -140,7 +139,7 @@ export function IdCard({ selectedOption }) {
 						{account?.address && truncateEthAddress(account?.address)}
 					</div>
 					<div className="font-bold w-full   text-[#535143] -left-[200px] absolute opacity-90 top-[210px] text-lg ">
-						Age:{` `} {convertAge(Number(age))}
+						Age:{` `} {convertAge(age)}
 					</div>
 					<div className="font-bold w-full   text-[#535143] -left-[190px] absolute opacity-90 top-[240px] text-lg">
 						Mood:{` `} {convertMood(mood)}
@@ -211,7 +210,7 @@ export function IdCard({ selectedOption }) {
 					</div>
 					<div className="font-bold flex flex-col items-start opacity-90 text-[#2B2B2B] left-[350px] top-[265px] text-lg absolute">
 						<div className=" text-[#2B2B2B]">AGE</div>
-						<div className=" text-[#2B2B2B]">{age}</div>
+						<div className=" text-[#2B2B2B]">{convertAge(age)}</div>
 					</div>
 					<div className="font-bold flex flex-col items-start opacity-90 text-[#2B2B2B] left-[450px] top-[265px] text-lg absolute">
 						<div className=" text-[#2B2B2B]">VIBE</div>
