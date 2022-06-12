@@ -104,7 +104,7 @@ export default function Web() {
 	}, []);
 
 	return (
-		<div className="w-screen h-screen bg-gradient-to-r from-rose-400 to-orange-300  mx-auto items-center justify-center text-center ">
+		<div className="w-screen h-screen bg-gradient-to-b to-[#FEFF01] from-[#16FED4]  mx-auto items-center justify-center text-center ">
 			<Select
 				className="w-28 absolute top-10 left-10"
 				defaultValue={selectedOption}

@@ -219,9 +219,9 @@ export function IdCard({ selectedOption }) {
 							onClick={faceDetected}
 							className="absolute bottom-2 right-10 -rotate-[25deg] rounded-full "
 							alt="id-card"
-							height={144}
-							width={106}
-							src="/ethlogo.png"
+							height={244}
+							width={146}
+							src="/ethprague.png"
 						/>
 						{/* <div onClick={capture} className="border rounded-sm p-1 border-black px-4">
 							Mint
