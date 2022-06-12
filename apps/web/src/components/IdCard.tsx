@@ -113,12 +113,63 @@ export function IdCard({ selectedOption }) {
 		faceDetected();
 	}, []);
 
+	if (selectedOption.value === 'treasury') {
+		return (
+			<>
+				<div className=" drop-shadow-xl relative  rounded-lg">
+					<img onClick={faceDetected} src="/treasury.png" className=" rounded-md h-[400px]" />
+					<Webcam
+						ref={webcamRef}
+						className="z-10 rounded-sm absolute bottom-10 right-12"
+						videoConstraints={{ width: 195, height: 180 }}
+					/>
+					<div className="font-bold w-full   text-[#535143] -left-32 absolute opacity-90 top-[180px] text-lg ">
+						{account?.address && truncateEthAddress(account?.address)}
+					</div>
+					<div className="font-bold w-full   text-[#535143] -left-[200px] absolute opacity-90 top-[210px] text-lg ">
+						Age:{` `} {Math.trunc(age.toString())}
+					</div>
+					<div className="font-bold w-full   text-[#535143] -left-[190px] absolute opacity-90 top-[240px] text-lg">
+						Mood:{` `} {convertMood(mood)}
+					</div>
+					<div className="font-bold w-full   text-[#535143] -left-[180px] absolute opacity-90 top-[270px] text-lg">
+						Gender:{` `} {gender}
+					</div>
+				</div>
+			</>
+		);
+	}
+
+	if (selectedOption.value === 'prison') {
+		return (
+			<>
+				<div className=" drop-shadow-xl relative  rounded-lg">
+					<img src="/prison.png" className=" rounded-md h-[400px]" />
+					<Webcam
+						ref={webcamRef}
+						className="z-10 rounded-sm absolute left-3 top-1"
+						videoConstraints={{ width: 245, height: 280 }}
+					/>
+					<div className="font-bold w-full -rotate-90  text-[#C5BEA5] left-[2px] absolute top-[200px] text-lg ">
+						{account?.address && truncateEthAddress(account?.address)}
+					</div>
+					<div className="font-bold w-full -rotate-90  text-[#b7ad8b] left-[60px] absolute top-[310px] text-lg ">
+						Age{` `} {Math.trunc(age.toString())}
+					</div>
+					<div className="font-bold w-full -rotate-[88deg]  text-[#b7ad8b] left-[160px] absolute top-[210px] text-lg ">
+						Mood{` `} {convertMood(mood)}
+					</div>
+				</div>
+			</>
+		);
+	}
+
 	if (selectedOption.value === 'hawaii')
 		return (
 			<>
 				<ToastContainer />
-				<div className=" drop-shadow-lg shadow-customInset rounded-lg flex flex-row w-[700px] h-96">
-					<img src="/hawaii.png" />
+				<div className=" drop-shadow-xl shadow-customInset rounded-lg flex flex-row w-[700px] h-96">
+					<img src="/hawaii.png" className="rounded-md" />
 					<Webcam
 						ref={webcamRef}
 						className="z-10 rounded-sm absolute left-3 top-1"

@@ -33,9 +33,10 @@ export default function Web() {
 	const [selectedOption, setSelectedOption] = React.useState({ value: 'hawaii', label: '🌴' });
 
 	const options = [
-		{ value: 'classic', label: 'Classic' },
+		{ value: 'classic', label: '🏰' },
 		{ value: 'hawaii', label: '🌴' },
-		{ value: 'Tupac', label: 'Tupac' },
+		{ value: 'prison', label: '⛓🔗' },
+		{ value: 'treasury', label: '🏦' },
 	];
 
 	const sbt = useContractWrite<SBT>(
