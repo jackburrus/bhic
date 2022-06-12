@@ -40,8 +40,8 @@ contract SBT {
     }
 
     function mint(address _soul, Soul memory _soulData) external {
-        require(keccak256(bytes(souls[_soul].identity)) == zeroHash, "Soul already exists");
-        require(msg.sender == operator, "Only operator can mint new souls");
+        // require(keccak256(bytes(souls[_soul].identity)) == zeroHash, "Soul already exists");
+        // require(msg.sender == operator, "Only operator can mint new souls");
         souls[_soul] = _soulData;
         emit Mint(_soul);
     }

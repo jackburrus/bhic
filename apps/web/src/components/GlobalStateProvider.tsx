@@ -2,6 +2,11 @@ import { createContext, useContext, useMemo, useState } from 'react';
 
 type GlobalStateProviderProps = {
 	age: string;
+	mood: string;
+	gender: string;
+	setAge: (age: string) => void;
+	setGender: (gender: string) => void;
+	setMood: (mood: string) => void;
 };
 const GlobalStateContext = createContext<GlobalStateProviderProps>(undefined);
 
