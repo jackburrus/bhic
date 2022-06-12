@@ -97,7 +97,7 @@ export function IdCard({ selectedOption }) {
 	const convertMood = (mood) => {
 		switch (mood) {
 			case 'happy':
-				return 'ETH is at $4K Happy';
+				return 'High on life';
 			case 'sad':
 				return 'rekt';
 			case 'angry':
@@ -106,6 +106,19 @@ export function IdCard({ selectedOption }) {
 				return 'dgaf';
 			case 'fearful':
 				return 'scurred';
+		}
+	};
+
+	const convertAge = (age) => {
+		switch (age) {
+			case age < 25:
+				return 'zoomer';
+			case age > 25 && age < 40:
+				return 'boomer';
+			case age > 40 && age < 75:
+				return 'old af';
+			default:
+				return Math.floor(age);
 		}
 	};
 
@@ -127,7 +140,7 @@ export function IdCard({ selectedOption }) {
 						{account?.address && truncateEthAddress(account?.address)}
 					</div>
 					<div className="font-bold w-full   text-[#535143] -left-[200px] absolute opacity-90 top-[210px] text-lg ">
-						Age:{` `} {Math.trunc(age.toString())}
+						Age:{` `} {convertAge(Number(age))}
 					</div>
 					<div className="font-bold w-full   text-[#535143] -left-[190px] absolute opacity-90 top-[240px] text-lg">
 						Mood:{` `} {convertMood(mood)}
